@@ -32,69 +32,70 @@ module: datadog_monitor
 short_description: Manages Datadog monitors
 description:
 - "Manages monitors within Datadog"
-- "Options like described on http://docs.datadoghq.com/api/"
+- "Options like described on U(http://docs.datadoghq.com/api/)"
+- "Uses datadogpy U(https://github.com/DataDog/datadogpy) library -> pip install datadog."
+- "Currently this module has no check mode."
 version_added: "2.0"
-author: "Sebastian Kornehl (@skornehl)" 
-notes: []
+author: "Sebastian Kornehl <sebastian.kornehl@asideas.de> (@skornehl)"
 requirements: [datadog]
 options:
-    api_key:
+    I(api_key):
         description: ["Your DataDog API key."]
         required: true
-    app_key:
+    I(app_key):
         description: ["Your DataDog app key."]
         required: true
-    state:
+    I(state):
         description: ["The designated state of the monitor."]
         required: true
         choices: ['present', 'absent', 'muted', 'unmuted']
-    type:
+    I(type):
         description:
             - "The type of the monitor."
             - The 'event alert'is available starting at Ansible 2.1
         required: false
         default: null
         choices: ['metric alert', 'service check', 'event alert']
-    query:
+    I(query):
         description: ["The monitor query to notify on with syntax varying depending on what type of monitor you are creating."]
         required: false
         default: null
-    name:
+    I(name):
         description: ["The name of the alert."]
         required: true
-    message:
+    I(message):
         description: ["A message to include with notifications for this monitor. Email notifications can be sent to specific users by using the same '@username' notation as events."]
         required: false
         default: null
-    silenced:
+    I(silenced):
         description: ["Dictionary of scopes to timestamps or None. Each scope will be muted until the given POSIX timestamp or forever if the value is None. "]
         required: false
         default: ""
-    notify_no_data:
-        description: ["A boolean indicating whether this monitor will notify when data stops reporting.."]
+    I(notify_no_data):
+        description: ["A boolean indicating whether this monitor will notify when data stops reporting."]
         required: false
         default: False
-    no_data_timeframe:
+    I(no_data_timeframe):
         description: ["The number of minutes before a monitor will notify when data stops reporting. Must be at least 2x the monitor timeframe for metric alerts or 2 minutes for service checks."]
         required: false
         default: 2x timeframe for metric, 2 minutes for service
-    timeout_h:
+    I(timeout_h):
         description: ["The number of hours of the monitor not reporting data before it will automatically resolve from a triggered state."]
         required: false
         default: null
-    renotify_interval:
+    I(renotify_interval):
         description: ["The number of minutes after the last notification before a monitor will re-notify on the current status. It will only re-notify if it's not resolved."]
         required: false
         default: null
-    escalation_message:
+    I(escalation_message):
         description: ["A message to include with a re-notification. Supports the '@username' notification we allow elsewhere. Not applicable if renotify_interval is None"]
         required: false
         default: null
-    notify_audit:
+    I(notify_audit):
         description: ["A boolean indicating whether tagged users will be notified on changes to this monitor."]
         required: false
         default: False
-    thresholds:
+    I(thresholds):
         description: ["A dictionary of thresholds by status. This option is only available for service checks and metric alerts. Because each of them can have multiple thresholds, we don't define them directly in the query."]
         required: false
         default: {'ok': 1, 'critical': 1, 'warning': 1}
@@ -134,6 +135,8 @@ datadog_monitor:
   app_key: "87ce4a24b5553d2e482ea8a8500e71b8ad4554ff"
 '''
 
+RETURN = '''
+'''
 
 def main():
     module = AnsibleModule(
